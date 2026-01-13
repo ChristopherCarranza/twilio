@@ -89,7 +89,6 @@ class Twilio
             'scheduleType',
             'sendAt',
             'sendAsMms',
-            'contentVariables',
             'riskCheck',
         ]);
 
