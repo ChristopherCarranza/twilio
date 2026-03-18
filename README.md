@@ -5,7 +5,7 @@
 [![Build Status](https://github.com/laravel-notification-channels/twilio/actions/workflows/ci.yml/badge.svg)](https://github.com/laravel-notification-channels/twilio/actions/workflows/ci.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/twilio.svg)](https://packagist.org/packages/laravel-notification-channels/twilio)
 
-This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 11, 12, and 13.
+This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 12 and 13.
 
 ## Contents
 
@@ -64,6 +64,10 @@ Twilio recommends always using a [Messaging Service](https://www.twilio.com/docs
  access to features like Advanced Opt-Out, Sticky Sender, Scaler, Geomatch, Shortcode Reroute, and Smart Encoding.
 
 Having issues with SMS? Check Twilio's [best practices](https://www.twilio.com/docs/sms/services/services-best-practices).
+
+## Upgrading from 4.1 to 4.2
+
+We have dropped support for PHP < 8.3 and the minimum Laravel version is now 12. Other than that, there are no breaking changes.
 
 ## Upgrading from 3.x to 4.x
 

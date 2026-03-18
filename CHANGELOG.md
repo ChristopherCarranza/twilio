@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-notification-channels/twilio` will be documented in this file.
 
+## [4.2.0](https://github.com/laravel-notification-channels/twilio/releases/tag/4.2.0) (2026-03-18)
+
+- Added Laravel 13 support
+- Added PHP 8.5 to CI workflow matrix
+- Dropped Laravel 11 support
+- Dropped PHP 8.2 support (minimum is now PHP 8.3)
+- Dropped `twilio/sdk` 7.x support (minimum is now 8.3)
+
 ## [4.1.3](https://github.com/laravel-notification-channels/twilio/releases/tag/4.1.3) (2026-01-13)
 
 - [Fix] Optional param `contentVariables` only exists in `TwilioContentTemplateMessage` (regression from v4.1.2) #162 #163
