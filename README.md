@@ -5,7 +5,7 @@
 [![Build Status](https://github.com/laravel-notification-channels/twilio/actions/workflows/ci.yml/badge.svg)](https://github.com/laravel-notification-channels/twilio/actions/workflows/ci.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/twilio.svg)](https://packagist.org/packages/laravel-notification-channels/twilio)
 
-This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 11.x / 12.x
+This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 11, 12, and 13.
 
 ## Contents
 
