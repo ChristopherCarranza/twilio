@@ -1,16 +1,11 @@
 # Twilio notifications channel for Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/twilio.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/twilio)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/github/workflow/status/laravel-notification-channels/twilio/PHP?style=flat-square)](https://travis-ci.org/laravel-notification-channels/twilio)
-[![StyleCI](https://styleci.io/repos/65543339/shield)](https://styleci.io/repos/65543339)
-[![Quality Score](https://img.shields.io/scrutinizer/g/laravel-notification-channels/twilio.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/twilio)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/twilio/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/twilio/?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/twilio.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/twilio)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/twilio.svg)](https://packagist.org/packages/laravel-notification-channels/twilio)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
+[![Build Status](https://github.com/laravel-notification-channels/twilio/actions/workflows/ci.yml/badge.svg)](https://github.com/laravel-notification-channels/twilio/actions/workflows/ci.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/twilio.svg)](https://packagist.org/packages/laravel-notification-channels/twilio)
 
-This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 5.5+, 6.x, 7.x, 8.x & 9.x
-
-You are viewing the `3.x` documentation. [Click here](https://github.com/laravel-notification-channels/twilio/tree/2.x) to view the `2.x` documentation.
+This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 12 and 13.
 
 ## Contents
 
@@ -26,10 +21,10 @@ You are viewing the `3.x` documentation. [Click here](https://github.com/laravel
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via Composer:
 
 ``` bash
-composer require laravel-notification-channels/twilio
+$ composer require laravel-notification-channels/twilio
 ```
 
 ### Configuration
@@ -58,7 +53,7 @@ Run `php artisan vendor:publish --provider="NotificationChannels\Twilio\TwilioPr
 #### Suppressing specific errors or all errors
 
 Publish the config using the above command, and edit the `ignored_error_codes` array. You can get the list of
-exception codes from [the documentation](https://www.twilio.com/docs/api/errors). 
+exception codes from [the documentation](https://www.twilio.com/docs/api/errors).
 
 If you want to suppress all errors, you can set the option to `['*']`. The errors will not be logged but notification
 failed events will still be emitted.
@@ -70,15 +65,23 @@ Twilio recommends always using a [Messaging Service](https://www.twilio.com/docs
 
 Having issues with SMS? Check Twilio's [best practices](https://www.twilio.com/docs/sms/services/services-best-practices).
 
+## Upgrading from 4.1 to 4.2
+
+We have dropped support for PHP < 8.3 and the minimum Laravel version is now 12. Other than that, there are no breaking changes.
+
+## Upgrading from 3.x to 4.x
+
+We have dropped support for PHP < 8.2 and the minimum Laravel version is now 11. Other than that, there are no breaking changes.
+
 ## Upgrading from 2.x to 3.x
 
-If you're upgrading from version `2.x`, you'll need to make sure that your set environment variables match those above 
-in the config section. None of the environment variable names have changed, but if you used different keys in your 
+If you're upgrading from version `2.x`, you'll need to make sure that your set environment variables match those above
+in the config section. None of the environment variable names have changed, but if you used different keys in your
 `services.php` config then you'll need to update them to match the above, or publish the config file and change the
 `env` key.
- 
+
 You should also remove the old entry for `twilio` from your `services.php` config, since it's no longer used.
- 
+
 The main breaking change between `2.x` and `3.x` is that failed notification will now throw an exception unless they are
 in the list of ignored error codes (publish the config file to edit these).
 
@@ -87,7 +90,7 @@ suppressed.
 
 ## Usage
 
-Now you can use the channel in your `via()` method inside the notification:
+Now you can use the channel in your `via()` method inside the notification to send an **SMS**:
 
 ``` php
 use NotificationChannels\Twilio\TwilioChannel;
@@ -109,7 +112,7 @@ class AccountApproved extends Notification
 }
 ```
 
-You can also send an MMS:
+You can also send an **MMS**:
 
 ``` php
 use NotificationChannels\Twilio\TwilioChannel;
@@ -132,7 +135,36 @@ class AccountApproved extends Notification
 }
 ```
 
-Or create a Twilio call:
+You can also send using **Content Templates**:
+
+``` php
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioContentTemplateMessage;
+use Illuminate\Notifications\Notification;
+
+class AccountApproved extends Notification
+{
+    public function via($notifiable)
+    {
+        return [TwilioChannel::class];
+    }
+
+    public function toTwilio($notifiable)
+    {
+        return (new TwilioContentTemplateMessage())
+            ->contentSid("HXXXXXXXXXXXXXXXXXXXXXXXX")
+            ->contentVariables([
+                '1' => 'John Doe',
+                '2' => 'ACME Inc.',
+            ]);
+    }
+}
+```
+
+> [!NOTE]
+> If sending via WhatsApp, you must add `whatsapp:` to the beginning of the phone number (i.e. `->from('whatsapp:+61428000382')`). The number must also be approved as a [WhatsApp Sender](https://www.twilio.com/console/sms/whatsapp/senders).
+
+Or create a **Twilio Call Message**:
 
 ``` php
 use NotificationChannels\Twilio\TwilioChannel;
@@ -171,6 +203,15 @@ public function routeNotificationForTwilio()
 - `content('')`: Accepts a string value for the notification body.
 - `messagingServiceSid('')`: Accepts a messaging service SID to handle configuration.
 
+#### TwilioMmsMessage
+
+- `mediaUrl('')`: Set the message media url.
+
+#### TwilioContentTemplateMessage
+
+- `contentSid('')`: Set the content sid (starting with H).
+- `contentVariables([...])`: Set the content variables.
+
 #### TwilioCallMessage
 
 - `from('')`: Accepts a phone to use as the notification sender.
@@ -188,7 +229,7 @@ $ composer test
 
 ## Security
 
-If you discover any security related issues, please email gregoriohc@gmail.com instead of using the issue tracker.
+If you discover any security related issues, please email pipo@onlime.ch instead of using the issue tracker.
 
 ## Contributing
 
@@ -196,6 +237,8 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 
+- [Philip Iezzi (Pipo)](https://github.com/onlime)
+- [Pascal Baljet](https://github.com/pascalbaljet)
 - [Gregorio Hernández Caso](https://github.com/gregoriohc)
 - [atymic](https://github.com/atymic)
 - [All Contributors](../../contributors)

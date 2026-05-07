@@ -4,45 +4,40 @@ namespace NotificationChannels\Twilio;
 
 class TwilioSmsMessage extends TwilioMessage
 {
-    /**
-     * @var null|string
-     */
-    public $alphaNumSender;
+    public ?string $alphaNumSender = null;
 
-    /**
-     * @var null|string
-     */
-    public $messagingServiceSid;
+    public ?string $messagingServiceSid = null;
 
-    /**
-     * @var null|string
-     */
-    public $applicationSid;
+    public ?string $applicationSid = null;
 
-    /**
-     * @var null|bool
-     */
-    public $forceDelivery;
+    public ?bool $forceDelivery = null;
 
-    /**
-     * @var null|float
-     */
-    public $maxPrice;
+    public ?float $maxPrice = null;
 
-    /**
-     * @var null|bool
-     */
-    public $provideFeedback;
+    public ?bool $provideFeedback = null;
 
-    /**
-     * @var null|int
-     */
-    public $validityPeriod;
+    public ?int $validityPeriod = null;
+
+    public ?int $attempt = null;
+
+    public ?string $contentRetention = null;
+
+    public ?string $addressRetention = null;
+
+    public ?bool $smartEncoded = null;
+
+    public ?array $persistentAction = null;
+
+    public ?string $scheduleType = null;
+
+    public ?string $sendAt = null;
+
+    public ?bool $sendAsMms = null;
+
+    public ?string $riskCheck = null;
 
     /**
      * Get the from address of this message.
-     *
-     * @return null|string
      */
     public function getFrom(): ?string
     {
@@ -59,9 +54,6 @@ class TwilioSmsMessage extends TwilioMessage
 
     /**
      * Set the messaging service SID.
-     *
-     * @param  string $messagingServiceSid
-     * @return $this
      */
     public function messagingServiceSid(string $messagingServiceSid): self
     {
@@ -72,8 +64,6 @@ class TwilioSmsMessage extends TwilioMessage
 
     /**
      * Get the messaging service SID of this message.
-     *
-     * @return null|string
      */
     public function getMessagingServiceSid(): ?string
     {
@@ -82,9 +72,6 @@ class TwilioSmsMessage extends TwilioMessage
 
     /**
      * Set the alphanumeric sender.
-     *
-     * @param string $sender
-     * @return $this
      */
     public function sender(string $sender): self
     {
@@ -95,9 +82,6 @@ class TwilioSmsMessage extends TwilioMessage
 
     /**
      * Set application SID for the message status callback.
-     *
-     * @param string $applicationSid
-     * @return $this
      */
     public function applicationSid(string $applicationSid): self
     {
@@ -108,9 +92,6 @@ class TwilioSmsMessage extends TwilioMessage
 
     /**
      * Set force delivery (Deliver message without validation).
-     *
-     * @param bool $forceDelivery
-     * @return $this
      */
     public function forceDelivery(bool $forceDelivery): self
     {
@@ -121,9 +102,6 @@ class TwilioSmsMessage extends TwilioMessage
 
     /**
      * Set the max price (in USD dollars).
-     *
-     * @param float $maxPrice
-     * @return $this
      */
     public function maxPrice(float $maxPrice): self
     {
@@ -134,9 +112,6 @@ class TwilioSmsMessage extends TwilioMessage
 
     /**
      * Set the provide feedback option.
-     *
-     * @param bool $provideFeedback
-     * @return $this
      */
     public function provideFeedback(bool $provideFeedback): self
     {
@@ -147,14 +122,114 @@ class TwilioSmsMessage extends TwilioMessage
 
     /**
      * Set the validity period (in seconds).
-     *
-     * @param int $validityPeriodSeconds
-     *
-     * @return $this
      */
     public function validityPeriod(int $validityPeriodSeconds): self
     {
         $this->validityPeriod = $validityPeriodSeconds;
+
+        return $this;
+    }
+
+    /**
+     * Total number of attempts made to send the message (including the current one).
+     */
+    public function attempt(int $attempt): self
+    {
+        $this->attempt = $attempt;
+
+        return $this;
+    }
+
+    /**
+     * Determines if the message content can be stored or redacted based on privacy settings
+     * Possible values:
+     * - retain
+     * - discard
+     */
+    public function contentRetention(string $contentRetention): self
+    {
+        $this->contentRetention = $contentRetention;
+
+        return $this;
+    }
+
+    /**
+     * Determines if the address can be stored or obfuscated based on privacy settings
+     * Possible values:
+     * - retain
+     * - obfuscate
+     */
+    public function addressRetention(string $addressRetention): self
+    {
+        $this->addressRetention = $addressRetention;
+
+        return $this;
+    }
+
+    /**
+     * Whether to detect Unicode characters that have a similar GSM-7 character and replace them
+     */
+    public function smartEncoded(bool $smartEncoded): self
+    {
+        $this->smartEncoded = $smartEncoded;
+
+        return $this;
+    }
+
+    /**
+     * Rich actions for non-SMS/MMS channels. Used for sending location in WhatsApp messages.
+     * @param array<string> $persistentAction
+     * @return $this
+     */
+    public function persistentAction(array $persistentAction): self
+    {
+        $this->persistentAction = $persistentAction;
+
+        return $this;
+    }
+
+    /**
+     * For Messaging Services only: Include this parameter with a value of fixed in conjunction with the send_time parameter in order to schedule a Message.
+     * Possible values:
+     * - fixed
+     */
+    public function scheduleType(string $scheduleType): self
+    {
+        $this->scheduleType = $scheduleType;
+
+        return $this;
+    }
+
+    /**
+     * The time that Twilio will send the message.
+     * Must be in ISO 8601 format.
+     */
+    public function sendAt(string $sendAt): self
+    {
+        $this->sendAt = $sendAt;
+
+        return $this;
+    }
+
+    /**
+     * If set to true, Twilio delivers the message as a single MMS message, regardless of the presence of media.
+     */
+    public function sendAsMms(bool $sendAsMms): self
+    {
+        $this->sendAsMms = $sendAsMms;
+
+        return $this;
+    }
+
+    /**
+     * Include this parameter with a value of "disable" to skip any kind of risk check on the respective message request.
+     * Possible values:
+     * - enable (default)
+     * - disable
+     */
+    public function riskCheck(string $riskCheck): self
+    {
+        $this->riskCheck = $riskCheck;
 
         return $this;
     }

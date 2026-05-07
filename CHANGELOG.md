@@ -1,6 +1,44 @@
 # Changelog
 
-All notable changes to `twilio` will be documented in this file
+All notable changes to `laravel-notification-channels/twilio` will be documented in this file.
+
+## [4.2.0](https://github.com/laravel-notification-channels/twilio/releases/tag/4.2.0) (2026-03-18)
+
+- Added Laravel 13 support
+- Added PHP 8.5 to CI workflow matrix
+- Dropped Laravel 11 support
+- Dropped PHP 8.2 support (minimum is now PHP 8.3)
+- Dropped `twilio/sdk` 7.x support (minimum is now 8.3)
+
+## [4.1.3](https://github.com/laravel-notification-channels/twilio/releases/tag/4.1.3) (2026-01-13)
+
+- [Fix] Optional param `contentVariables` only exists in `TwilioContentTemplateMessage` (regression from v4.1.2) #162 #163
+
+## [4.1.2](https://github.com/laravel-notification-channels/twilio/releases/tag/4.1.2) (2025-12-27)
+
+- Added support for more SMS Message optional params #154 by @MarcEspiard
+
+## [4.1.1](https://github.com/laravel-notification-channels/twilio/releases/tag/4.1.1) (2025-07-07)
+
+- Added support for content templates (i.e. whatsapp) #152 by @alexw23
+
+## [4.1.0](https://github.com/laravel-notification-channels/twilio/releases/tag/4.1.0) (2025-03-03)
+
+- Added Laravel 12 support #155 #157
+- Added PHP 8.4 to CI workflow matrix
+
+## [4.0.0](https://github.com/laravel-notification-channels/twilio/releases/tag/4.0.0) (2024-11-26)
+
+- Added PHP Linting (Pint) to CI workflow
+- Additional tests to achieve 100% code coverage by @pascalbaljet
+- Update PhpUnit to 10.5 and fixed all tests.
+- Bump `twilio/sdk` to 8.3
+- Improved types and use constructor property promotion everywhere.
+- Added Pint and fixed PHP syntax.
+- Drop support for PHP < 8.2 **BREAKING CHANGE**
+- Drop support for Laravel 7.x, 8.x, 9.x, and 10.x **BREAKING CHANGE**
+- Enable overriding the Twilio message source #142
+- Add enabled config option (`TWILIO_ENABLED`) to disable the channel #121
 
 ## 3.0.0
 

@@ -5,30 +5,19 @@ namespace NotificationChannels\Twilio;
 class TwilioCallMessage extends TwilioMessage
 {
     public const STATUS_CANCELED = 'canceled';
+
     public const STATUS_COMPLETED = 'completed';
 
     public const MACHINE_DETECTION_ENABLE = 'Enable';
     public const MACHINE_DETECTION_DETECT_MESSAGE_END = 'DetectMessageEnd';
 
-    /**
-     * @var null|string
-     */
-    public $method;
+    public ?string $method = null;
 
-    /**
-     * @var null|string
-     */
-    public $status;
+    public ?string $status = null;
 
-    /**
-     * @var null|string
-     */
-    public $fallbackUrl;
+    public ?string $fallbackUrl = null;
 
-    /**
-     * @var null|string
-     */
-    public $fallbackMethod;
+    public ?string $fallbackMethod = null;
 
     /**
      * @var null|string
@@ -37,9 +26,6 @@ class TwilioCallMessage extends TwilioMessage
 
     /**
      * Set the message url.
-     *
-     * @param  string $url
-     * @return $this
      */
     public function url(string $url): self
     {
@@ -50,11 +36,8 @@ class TwilioCallMessage extends TwilioMessage
 
     /**
      * Set the message url request method.
-     *
-     * @param  string $method
-     * @return $this
      */
-    public function method($method): self
+    public function method(string $method): self
     {
         $this->method = $method;
 
@@ -63,9 +46,6 @@ class TwilioCallMessage extends TwilioMessage
 
     /**
      * Set the status for the current calls.
-     *
-     * @param  string $status
-     * @return $this
      */
     public function status(string $status): self
     {
@@ -76,9 +56,6 @@ class TwilioCallMessage extends TwilioMessage
 
     /**
      * Set the fallback url.
-     *
-     * @param string $fallbackUrl
-     * @return $this
      */
     public function fallbackUrl(string $fallbackUrl): self
     {
@@ -89,9 +66,6 @@ class TwilioCallMessage extends TwilioMessage
 
     /**
      * Set the fallback url request method.
-     *
-     * @param string $fallbackMethod
-     * @return $this
      */
     public function fallbackMethod(string $fallbackMethod): self
     {
